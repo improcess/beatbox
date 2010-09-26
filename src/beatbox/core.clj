@@ -24,9 +24,10 @@
   (* vol
      (overtone.ugens/play-buf 1 buf 1.0 1.0 0.0 1.0 1)))
 
+(Thread/sleep 1000)
 
 (def loops
-  (at (+ 1000 (System/currentTimeMillis))
+  (at (+ 2000 (System/currentTimeMillis))
       (zipmap (keys sample-bufs) (map #(looper % 0) (vals sample-bufs)))))
 
 (def state (zipmap (poly/coords m) (repeatedly #(agent 1))))
@@ -52,3 +53,8 @@
     (println "/n_set" x y loop state)))
 
 (poly/on-press m (fn [x y] (trigger x y)))
+
+
+
+
+
