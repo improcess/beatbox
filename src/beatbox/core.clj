@@ -3,28 +3,25 @@
    overtone.live
    [org.satta.glob :only [glob]])
 
-  (:require [polynome.core :as poly]
-            [overtone-contrib.core :as contrib]))
+  (:require [polynome.core :as poly]))
 
-(contrib/boot-and-wait)
-
+;;(def m (poly/init "/dev/tty.usbserial-m64-0790"))
 (def m (poly/init "/dev/tty.usbserial-m64-0790"))
-
 (def sample-files (glob "assets/*.{aif,AIF,wav,WAV}"))
 
-(defn file->name:sample
+(defn file->path:loaded-sample
   [file]
   (let [path (.getAbsolutePath file)]
       (vec (list path
                  (load-sample path)))))
 
-(def sample-bufs (into {} (map file->name:sample sample-files)))
+(def sample-bufs (into {} (map file->path:loaded-sample sample-files)))
 
-(defsynth looper [buf 0 vol 1]
+(definst looper [buf 0 vol 1]
   (* vol
-     (overtone.ugens/play-buf 1 buf 1.0 1.0 0.0 1.0 1)))
+     (play-buf 1 buf 1.0 1.0 0.0 1.0 1)))
 
-(Thread/sleep 1000)
+(Thread/sleep 4000)
 
 (def loops
   (at (+ 2000 (System/currentTimeMillis))
@@ -42,6 +39,9 @@
   [vol]
   (clojure.core/mod (inc vol) 2))
 
+
+(find-loop 1 1)
+
 (defn trigger
   [x y]
   (let [ag (get state [x y])
@@ -52,7 +52,7 @@
     (poly/led m x y state)
     (println "/n_set" x y loop state)))
 
-(poly/on-press m (fn [x y] (trigger x y)))
+(poly/on-press m (fn [x y s] (trigger x y)))
 
 
 
