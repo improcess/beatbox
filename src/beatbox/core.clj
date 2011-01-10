@@ -3,9 +3,9 @@
    overtone.live
    [org.satta.glob :only [glob]])
 
-  (:require [polynome.core :as poly]))
+  (:require [polynome.core :as poly]
+            [space-navigator :as space]))
 
-;;(def m (poly/init "/dev/tty.usbserial-m64-0790"))
 (def m (poly/init "/dev/tty.usbserial-m64-0790"))
 (def sample-files (glob "assets/*.{aif,AIF,wav,WAV}"))
 
@@ -17,9 +17,9 @@
 
 (def sample-bufs (into {} (map file->path:loaded-sample sample-files)))
 
-(definst looper [buf 0 vol 1]
+(definst looper [buf 0 vol 1 rate 1]
   (* vol
-     (play-buf 1 buf 1.0 1.0 0.0 1.0 1)))
+     (play-buf 1 buf rate 1.0 0.0 1.0 1)))
 
 (Thread/sleep 4000)
 
@@ -40,8 +40,6 @@
   (clojure.core/mod (inc vol) 2))
 
 
-(find-loop 1 1)
-
 (defn trigger
   [x y]
   (let [ag (get state [x y])
@@ -54,7 +52,13 @@
 
 (poly/on-press m (fn [x y s] (trigger x y)))
 
+(comment
+  (def s (space/space-navigator))
 
-
-
+  (space/on-diff-vals s
+                      (fn [vals]
+                        (ctl looper :rate (:x vals)))
+                      {:min-x 0
+                       :max-x 5}
+                      space/SAMPLE-RANGES))
 

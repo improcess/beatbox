@@ -10,3 +10,9 @@
 [submodule "checkouts/overtone-contrib"]
 	path = checkouts/overtone-contrib
 	url = git://github.com/improcess/overtone-contrib.git
+[submodule "checkouts/space-navigator"]
+	path = checkouts/space-navigator
+	url = git://github.com/improcess/space-navigator.git
+[submodule "checkouts/overtone-gui"]
+	path = checkouts/overtone-gui
+	url = git://github.com/overtone/overtone-gui.git
