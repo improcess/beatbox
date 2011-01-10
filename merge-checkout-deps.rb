@@ -19,6 +19,6 @@ checkout_dirs.each do |dir|
   end
   `cd #{dir} ; cp -R #{dir}/lib/* #{proj_root}/lib`
   if(File.exists?("#{dir}/native"))
-    `cp -R #{dir}/native #{proj_root}/native`
+    `cp -R #{dir}/native #{proj_root}`
   end
 end
