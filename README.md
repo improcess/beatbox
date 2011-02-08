@@ -22,7 +22,10 @@ Run `merge-checkout-deps.rb`
 
     ./merge-checkout-deps.rb
 
-That should do the trick...
+Edit src/beatbox/core to point to your monome:
+   (def m (poly/init "/dev/tty.usbserial-m64-0790"))
+
+That's it!
 
 ## License
 

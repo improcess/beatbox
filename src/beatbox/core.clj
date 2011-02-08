@@ -6,8 +6,10 @@
   (:require [polynome.core :as poly]
             [space-navigator :as space]))
 
-(def m (poly/init "/dev/tty.usbserial-m64-0790"))
 (def sample-files (sort (glob "assets/*.{aif,AIF,wav,WAV}")))
+(if (empty? sample-files) (throw (Exception. "Can't find any samples in the assets dir.")))
+
+(def m (poly/init "/dev/tty.usbserial-m64-0790"))
 
 (defn file->path:loaded-sample
   [file]
@@ -20,8 +22,6 @@
 (definst looper [buf 0 vol 1 rate 1]
   (* vol
      (play-buf 1 buf rate 1.0 0.0 1.0 1)))
-
-(Thread/sleep 4000)
 
 (def loops
   (at (+ 2000 (System/currentTimeMillis))
@@ -38,7 +38,6 @@
 (defn toggle-loop
   [vol]
   (clojure.core/mod (inc vol) 2))
-
 
 (defn trigger
   [x y]
