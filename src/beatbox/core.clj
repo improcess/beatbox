@@ -7,7 +7,7 @@
             [space-navigator :as space]))
 
 (def m (poly/init "/dev/tty.usbserial-m64-0790"))
-(def sample-files (glob "assets/*.{aif,AIF,wav,WAV}"))
+(def sample-files (sort (glob "assets/*.{aif,AIF,wav,WAV}")))
 
 (defn file->path:loaded-sample
   [file]
@@ -51,6 +51,8 @@
     (println "/n_set" x y loop state)))
 
 (poly/on-press m (fn [x y s] (trigger x y)))
+
+(ctl looper :rate 1.0)
 
 (comment
   (def s (space/space-navigator))
