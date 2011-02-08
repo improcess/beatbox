@@ -29,6 +29,6 @@ That's it!
 
 ## License
 
-Copyright (C) 2010 FIXME
+Copyright (C) 2010 Sam Aaron
 
 Distributed under the Eclipse Public License, the same as Clojure.
