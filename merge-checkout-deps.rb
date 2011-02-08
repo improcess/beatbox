@@ -4,6 +4,9 @@ proj_root = File.expand_path(File.dirname(__FILE__))
 
 checkout_dirs = Dir['checkouts/*'].map{ |sub_dir| proj_root + "/" + sub_dir}
 
+puts "Pulling in submodules if necessary"
+`cd #{proj_root} ; git submodule init ; git submodule update`
+
 puts "Pulling dependencies for project root (#{proj_root})..."
 `cd #{proj_root} ; lein deps`
 if `cd #{proj_root} ; lein help`.match(/native-deps/)
