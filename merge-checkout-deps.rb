@@ -4,7 +4,6 @@ proj_root = File.expand_path(File.dirname(__FILE__))
 
 checkout_dirs = Dir['checkouts/*'].map{ |sub_dir| proj_root + "/" + sub_dir}
 
-puts "Pulling in submodules if necessary"
 puts "\033[31mPulling in submodules if necessary\033[0m"
 `cd #{proj_root} ; git submodule init ; git submodule update`
 
