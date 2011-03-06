@@ -81,24 +81,25 @@
   []
   (doseq [[coords looper] loopers] (apply send (looper :state) change-vol silence looper coords )))
 
-
+;;(trigger 1 7)
+;;(mute)
 
 (comment
   ;;play about with synth params:
   (def rate (atom 1))
-  (ctl looper :rate 1)
-  (ctl looper :amp 0.1)
-  (ctl looper :room-size 1)
-  (ctl looper :dampening 1)
-  (ctl looper :wet-dry 0.1)
+  (ctl loop-synth :rate 1)
+  (ctl loop-synth :amp 0.1)
+  (ctl loop-synth :room-size 1)
+  (ctl loop-synth :dampening 1)
+  (ctl loop-synth :wet-dry 0.1)
 
   (defn tempo-slide [to]
     (let [from @rate
           step (if (< from to) 0.01 -0.01)
           vals (range from to step)]
-      (doall (map #(do (ctl looper :rate (reset! rate %)) (Thread/sleep 35)) vals))))
+      (doall (map #(do (ctl loop-synth :rate (reset! rate %)) (Thread/sleep 35)) vals))))
 
-  (ctl looper :rate 1)
+  (ctl loop-synth :rate 1)
 
   (tempo-slide 1)
 
