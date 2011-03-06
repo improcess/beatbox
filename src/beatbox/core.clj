@@ -14,7 +14,8 @@
         rev (free-verb src wet-dry room-size dampening)]
     (* vol amp rev)))
 
-(def m (poly/init "/dev/tty.usbserial-m64-0790"))
+;;(def m (poly/init "/dev/tty.usbserial-m64-0790"))
+(def m (poly/init "dummy"))
 
 (defn file->path:loaded-sample
   "Converts a file to a list containing the full path and the loaded sample info"
@@ -59,9 +60,13 @@
 
 (poly/on-press m (fn [x y s] (trigger x y)))
 
+(trigger 1 1)
+
 
 ;;play about with synth params:
-(def rate (atom 1))
+
+(comment
+  (def rate (atom 1))
 (ctl looper :rate 1)
 (ctl looper :amp 0.1)
 (ctl looper :room-size 1)
@@ -110,3 +115,4 @@
                       space/SAMPLE-RANGES)
   )
 
+)
