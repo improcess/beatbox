@@ -30,7 +30,7 @@
   (at (+ 1000 (System/currentTimeMillis))
       (zipmap (keys sample-bufs) (map #(looper % 0) (vals sample-bufs)))))
 
-(def state (zipmap (poly/coords m) (repeatedly #(agent 0))))
+(def state (zipmap (poly/coords m) (repeatedly #(agent 1))))
 
 (defn find-loop
   "Finds a particular loop within loops for a given x y pair"
