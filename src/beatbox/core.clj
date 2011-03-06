@@ -30,7 +30,7 @@
   (at (+ 1000 (System/currentTimeMillis))
       (zipmap (keys sample-bufs) (map #(looper % 0) (vals sample-bufs)))))
 
-(def state (zipmap (poly/coords m) (repeatedly #(agent 1))))
+(def state (zipmap (poly/coords m) (repeatedly #(agent 0))))
 
 (defn find-loop
   "Finds a particular loop within loops for a given x y pair"
@@ -52,16 +52,17 @@
    update the associated agent's state and monome LED state."
   [x y]
   (let [ag (get state [x y])
-        state @ag
+        vol @(send ag toggle-loop)
         loop (find-loop x y)]
-    (send ag toggle-loop)
-    (ctl loop :vol state)
+    (ctl loop :vol vol)
     (poly/led m x y state)))
 
-(poly/on-press m (fn [x y s] (trigger x y)))
-
-(trigger 1 1)
-
+(defn mute
+  "Silences all running samples. Not thread safe and uses a dirty hack..."
+  []
+  (let [ags (vals state)]
+    (doseq [ag ags] (send ag (fn [_] 1)))
+    (doseq [l (vals loops)] (ctl l :vol 0))))
 
 ;;play about with synth params:
 
