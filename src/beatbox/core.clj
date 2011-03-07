@@ -1,10 +1,13 @@
 (ns beatbox.core
   (:use
    overtone.live
-   [org.satta.glob :only [glob]])
+   [org.satta.glob :only [glob]]
+   overtone.gui.scope)
 
   (:require [polynome.core :as poly]
             [space-navigator :as space]))
+
+(pscope)
 
 ;;design a sc synth to play the samples
 (definst loop-synth [buf 0 vol 1 rate 1 amp 1 wet-dry 0.2 room-size 0  dampening 1]
@@ -13,8 +16,8 @@
     (* vol amp rev)))
 
 ;;change m to point to your monome (use dummy if you don't have one...)
-;;(def m (poly/init "/dev/tty.usbserial-m64-0790"))
-(def m (poly/init "dummy"))
+(def m (poly/init "/dev/tty.usbserial-m64-0790"))
+;;(def m (poly/init "dummy"))
 
 ;;fetch all the samples from the assets dir
 (def sample-files (sort (glob "assets/*.{aif,AIF,wav,WAV}")))
@@ -35,7 +38,7 @@
 (defn start-looper
   "Instantiates a new looper synth for a given loaded sample in the sample-map"
   [sample-map]
-  (loop-synth (:id (sample-map :sample)) 0))
+  (loop-synth (sample-map :sample) 0))
 
 (def samples (load-samples sample-files))
 
@@ -62,7 +65,7 @@
         synth   (looper :synth)
         path    (looper :path)]
     (ctl synth :vol new-vol)
-    (poly/led m x y)
+    (poly/led m x y new-vol)
     (if (= 1 new-vol)
       (println "Playing " path)
       (println "Stopping" path))
@@ -81,8 +84,7 @@
   []
   (doseq [[coords looper] loopers] (apply send (looper :state) change-vol silence looper coords )))
 
-;;(trigger 1 7)
-;;(mute)
+(poly/on-press m (fn [x y s] (trigger x y)))
 
 (comment
   ;;play about with synth params:
