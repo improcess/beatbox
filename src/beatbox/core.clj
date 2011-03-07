@@ -41,7 +41,7 @@
 
 ;;use the samples to create multiple looper synths starting in sync in 500ms time from now
 (def loopers
-  (at (+ 500 (System/currentTimeMillis))
+  (at (+ 500 (now))
       (zipmap (poly/coords m)
               (map #(assoc % :synth (start-looper %)) samples))))
 
