@@ -14,8 +14,8 @@
     (* vol amp rev)))
 
 ;;change m to point to your monome (use dummy if you don't have one...)
-;;(def m (poly/init "/dev/tty.usbserial-m64-0790"))
-(def m (poly/init "dummy"))
+(def m (poly/init "/dev/tty.usbserial-m64-0790"))
+;;(def m (poly/init "dummy"))
 
 ;;fetch all the samples from the assets dir
 (def sample-files (sort (glob "assets/*.{aif,AIF,wav,WAV}")))
