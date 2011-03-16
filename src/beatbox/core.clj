@@ -1,11 +1,9 @@
 (ns beatbox.core
   (:use
    overtone.live
-   [org.satta.glob :only [glob]]
-   overtone.gui.scope)
+   [org.satta.glob :only [glob]])
 
-  (:require [polynome.core :as poly]
-            [space-navigator :as space]))
+  (:require [polynome.core :as poly]))
 
 (pscope)
 
@@ -16,8 +14,8 @@
     (* vol amp rev)))
 
 ;;change m to point to your monome (use dummy if you don't have one...)
-(def m (poly/init "/dev/tty.usbserial-m64-0790"))
-;;(def m (poly/init "dummy"))
+;;(def m (poly/init "/dev/tty.usbserial-m64-0790"))
+(def m (poly/init "dummy"))
 
 ;;fetch all the samples from the assets dir
 (def sample-files (sort (glob "assets/*.{aif,AIF,wav,WAV}")))
