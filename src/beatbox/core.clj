@@ -14,7 +14,8 @@
     (* vol amp rev)))
 
 ;;change m to point to your monome (use dummy if you don't have one...)
-(def m (poly/init "/dev/tty.usbserial-m64-0790"))
+;;(def m (poly/init "/dev/tty.usbserial-m64-0790"))
+(def m (poly/init "/dev/tty.usbserial-m128-115"))
 ;;(def m (poly/init "dummy"))
 
 ;;fetch all the samples from the assets dir
@@ -43,8 +44,9 @@
 ;;use the samples to create multiple looper synths starting in sync in 500ms time from now
 (def loopers
   (at (+ 500 (now))
-      (zipmap (poly/coords m)
-              (map #(assoc % :synth (start-looper %)) samples))))
+      (doall
+       (zipmap (poly/coords m)
+               (map #(assoc % :synth (start-looper %)) samples)))))
 
 (defn toggle
   "Invert the vol from 1 to 0 or 0 to 1"
