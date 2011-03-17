@@ -4,6 +4,7 @@ Basic sample lopper triggered by button presses
 
 ## Dependencies
 
+* [Clojure 1.2](http://clojure.org)
 * [Overtone](http://github.com/overtone/overtone)
 * [Polynome](http://github.com/improcess/polynome)
 
